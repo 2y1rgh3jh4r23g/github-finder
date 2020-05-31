@@ -1,14 +1,20 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Search extends Component {
   state = {
     text: "",
   };
 
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+  };
+
   // no need to bind this because we're using arrow functions
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.text);
+    this.props.searchUsers(this.state.text);
+    this.setState({ text: "" });
   };
 
   onChange = (e) => {
