@@ -12,7 +12,7 @@ const Users = ({ users, loading }) => {
   } else {
     // otherwise, display users
     return (
-      <div>
+      <div className='grid-3'>
         {users.map((user) => {
           return <UserItem key={user.id} user={user} />;
         })}

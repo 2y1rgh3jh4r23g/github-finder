@@ -5,11 +5,18 @@ import { Link } from "react-router-dom";
 // component to display a single user
 const UserItem = ({ user: { login, avatar_url, html_url } }) => {
   return (
-    <div>
-      <img src={avatar_url} alt='' style={{ width: "60px" }} />
+    <div className='card text-center'>
+      <img
+        src={avatar_url}
+        alt=''
+        className='round-img'
+        style={{ width: "60px" }}
+      />
       <h3>{login}</h3>
       <div>
-        <Link to={`/user/${login}`}>More</Link>
+        <Link to={`/user/${login}`} className='btn btn-dark btn-sm my-1'>
+          More
+        </Link>
       </div>
     </div>
   );

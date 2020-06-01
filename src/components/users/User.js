@@ -43,16 +43,23 @@ class User extends Component {
 
     return (
       <Fragment>
-        <Link to='/'>Back To Search</Link>
+        <Link to='/' className='btn btn-light'>
+          Back To Search
+        </Link>
         Hireable: {""}
         {hireable ? (
-          <i className='fas fa-check' />
+          <i className='fas fa-check text-success' />
         ) : (
-          <i className='fas fa-times-circle' />
+          <i className='fas fa-times-circle text-danger' />
         )}
-        <div>
-          <div>
-            <img src={avatar_url} alt='' style={{ width: "150px" }} />
+        <div className='card grid-2'>
+          <div className='all-center'>
+            <img
+              src={avatar_url}
+              className='round-img'
+              alt=''
+              style={{ width: "150px" }}
+            />
             <h1>{name}</h1>
             <p>Location: {location}</p>
           </div>
@@ -65,7 +72,9 @@ class User extends Component {
               </Fragment>
             )}
             {/* Link to GitHub profile */}
-            <a href={html_url}>Visit GitHub Profile</a>
+            <a href={html_url} className='btn btn-dark my-1'>
+              Visit GitHub Profile
+            </a>
             {/* Username, company, and website */}
             <ul>
               <li>
@@ -92,11 +101,11 @@ class User extends Component {
             </ul>
           </div>
         </div>
-        <div>
-          <div>Followers: {followers}</div>
-          <div>Following: {following}</div>
-          <div>Public Repos: {public_repos}</div>
-          <div>Public Gists: {public_gists}</div>
+        <div className='card text-center'>
+          <div className='badge badge-primary'>Followers: {followers}</div>
+          <div className='badge badge-success'>Following: {following}</div>
+          <div className='badge badge-light'>Public Repos: {public_repos}</div>
+          <div className='badge badge-dark'>Public Gists: {public_gists}</div>
         </div>
         <Repos repos={repos} />
       </Fragment>

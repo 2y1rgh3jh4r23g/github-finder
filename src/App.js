@@ -76,7 +76,7 @@ class App extends Component {
       <BrowserRouter>
         <div className='App'>
           <Navbar />
-          <div>
+          <div className='container'>
             <Alert alert={alert} />
             <Switch>
               {/* Route for home page */}
