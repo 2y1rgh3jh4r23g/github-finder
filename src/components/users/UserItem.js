@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// component do display a single user
+// component to display a single user
 const UserItem = ({ user: { login, avatar_url, html_url } }) => {
   return (
     <div className='card text-center'>
