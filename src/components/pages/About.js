@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 
+// About page
 const About = () => {
   return (
     <Fragment>
