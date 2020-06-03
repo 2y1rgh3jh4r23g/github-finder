@@ -10,7 +10,6 @@ import axios from "axios";
 import "./App.css";
 
 const App = () => {
-  // global app state
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
@@ -20,7 +19,6 @@ const App = () => {
   // Search GitHub users
   const searchUsers = async (text) => {
     setLoading(true);
-    // wait for the response
     const res = await axios.get(
       `https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
@@ -38,6 +36,7 @@ const App = () => {
     setLoading(false);
   };
 
+  // Get user's repos
   const getUserRepos = async (username) => {
     setLoading(true);
     const res = await axios.get(
@@ -91,6 +90,7 @@ const App = () => {
             />
             {/* Route for about page */}
             <Route exact path='/about' component={About} />
+            {/* Route for user page */}
             <Route
               exact
               path='/user/:login'
