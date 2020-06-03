@@ -18,7 +18,7 @@ const App = () => {
   const [alert, setAlert] = useState(null);
 
   // Search GitHub users
-  searchUsers = async (text) => {
+  const searchUsers = async (text) => {
     setLoading(true);
     // wait for the response
     const res = await axios.get(
@@ -29,7 +29,7 @@ const App = () => {
   };
 
   // Get single GitHub user
-  getUser = async (username) => {
+  const getUser = async (username) => {
     setLoading(true);
     const res = await axios.get(
       `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
@@ -38,85 +38,80 @@ const App = () => {
     setLoading(false);
   };
 
-  getUserRepos = async (username) => {
+  const getUserRepos = async (username) => {
     setLoading(true);
     const res = await axios.get(
       `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
-    this.setState({ repos: res.data, loading: false });
+    setRepos(res.data);
+    setLoading(false);
   };
 
   // Clear users
-  clearUsers = () => {
-    this.setState({ users: [], loading: false });
+  const clearUsers = () => {
+    setUsers([]);
+    setLoading(false);
   };
 
   // Set Alert
-  setAlert = (msg, type) => {
-    this.setState({
-      alert: {
-        msg,
-        type,
-      },
+  const showAlert = (msg, type) => {
+    setAlert({
+      msg,
+      type,
     });
 
     // make the alert disappear after 5 seconds
-    setTimeout(() => this.setState({ alert: null }), 5000);
+    setTimeout(() => setAlert(null), 5000);
   };
 
-  render() {
-    // destructure state
-    const { users, user, repos, loading, alert } = this.state;
-
-    return (
-      <BrowserRouter>
-        <div className='App'>
-          <Navbar />
-          <div className='container'>
-            <Alert alert={alert} />
-            <Switch>
-              {/* Route for home page */}
-              <Route
-                exact
-                path='/'
-                render={(props) => {
-                  return (
-                    <Fragment>
-                      <Search
-                        searchUsers={this.searchUsers}
-                        clearUsers={this.clearUsers}
-                        showClear={users.length > 0 ? true : false}
-                        setAlert={this.setAlert}
-                      />
-                      <Users loading={loading} users={users} />
-                    </Fragment>
-                  );
-                }}
-              />
-              {/* Route for about page */}
-              <Route exact path='/about' component={About} />
-              <Route
-                exact
-                path='/user/:login'
-                render={(props) => {
-                  return (
-                    <User
-                      {...props}
-                      getUser={this.getUser}
-                      getUserRepos={this.getUserRepos}
-                      user={user}
-                      repos={repos}
-                      loading={loading}
+  return (
+    <BrowserRouter>
+      <div className='App'>
+        <Navbar />
+        <div className='container'>
+          <Alert alert={alert} />
+          <Switch>
+            {/* Route for home page */}
+            <Route
+              exact
+              path='/'
+              render={(props) => {
+                return (
+                  <Fragment>
+                    <Search
+                      searchUsers={searchUsers}
+                      clearUsers={clearUsers}
+                      showClear={users.length > 0 ? true : false}
+                      setAlert={showAlert}
                     />
-                  );
-                }}
-              />
-            </Switch>
-          </div>
+                    <Users loading={loading} users={users} />
+                  </Fragment>
+                );
+              }}
+            />
+            {/* Route for about page */}
+            <Route exact path='/about' component={About} />
+            <Route
+              exact
+              path='/user/:login'
+              render={(props) => {
+                return (
+                  <User
+                    {...props}
+                    getUser={getUser}
+                    getUserRepos={getUserRepos}
+                    user={user}
+                    repos={repos}
+                    loading={loading}
+                  />
+                );
+              }}
+            />
+          </Switch>
         </div>
-      </BrowserRouter>
-    );
-  }
-}
+      </div>
+    </BrowserRouter>
+  );
+};
 
 export default App;
